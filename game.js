@@ -29,19 +29,6 @@ function playSound(colour) {
   media.play();
 }
 
-$("div[type='button']").click(function() {
-  //handle button click event
-  var userChosenColour = this.id; //stores the id of the selected element to a variable
-  userClickedPattern.push(userChosenColour);
-
-  //animations
-  playSound(userChosenColour);
-  animatePress(userChosenColour);
-
-  //pass the user's last answer to check
-  checkAnswer(userClickedPattern.length - 1);
-});
-
 function animatePress(currentColour) {
   $("#" + currentColour).addClass("pressed");
   //remove class pressed after 0.1s
@@ -49,13 +36,6 @@ function animatePress(currentColour) {
     $("#" + currentColour).removeClass("pressed");
   }, 100);
 }
-
-$("*").keydown(function () {
-  if (level === 0) {
-    nextSequence();
-    $("h1").text("Level 0");
-  }
-});
 
 function checkAnswer(currentLevel) {
   if(userClickedPattern[currentLevel] === gamePattern[currentLevel]) {
@@ -76,5 +56,31 @@ function checkAnswer(currentLevel) {
     }, 200);
 
     $("h1").text("Game Over! Press any key to restart");
+    startOver();
   }
 }
+
+function startOver() {
+  level = 0;
+  gamePattern = [];
+}
+
+$("div[type='button']").click(function() {
+  //handle button click event
+  var userChosenColour = this.id; //stores the id of the selected element to a variable
+  userClickedPattern.push(userChosenColour);
+
+  //animations
+  playSound(userChosenColour);
+  animatePress(userChosenColour);
+
+  //pass the user's last answer to check
+  checkAnswer(userClickedPattern.length - 1);
+});
+
+$("*").keydown(function () {
+  if (level === 0) {
+    nextSequence();
+    $("h1").text("Level 0");    
+  }
+});
