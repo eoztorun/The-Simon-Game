@@ -80,7 +80,7 @@ $("div[type='button']").click(function() {
 
 $("*").keydown(function () {
   if (level === 0) {
+    $("h1").text("Level " + level);
     nextSequence();
-    $("h1").text("Level 0");    
   }
 });
